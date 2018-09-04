@@ -38,15 +38,15 @@ export default function (url) {
 }
 
 function bufferToStream(buffer) {
- /* var stream = new Duplex();
+ var stream = new Duplex();
   stream.push(buffer);
   stream.push(null);
-  return stream;*/
+  return stream;
 }
 
 
 var parseAudio = function (audioFile, modelName, alphabet, lm, trie) {
-/*
+
   const buffer = Fs.readFileSync(audioFile);
   const result = Wav.decode(buffer);
 
@@ -86,10 +86,10 @@ var parseAudio = function (audioFile, modelName, alphabet, lm, trie) {
     console.log(model.stt(audioBuffer.slice(0, audioBuffer.length / 2), 16000));
     const inference_stop = process.hrtime(inference_start);
     console.error('Inference took %ds for %ds audio file.', totalTime(inference_stop), audioLength.toPrecision(4));
-  });*/
+  });
 }
 
 
 function totalTime(hrtimeValue) {
-  //return (hrtimeValue[0] + hrtimeValue[1] / 1000000000).toPrecision(4);
+  return (hrtimeValue[0] + hrtimeValue[1] / 1000000000).toPrecision(4);
 }
