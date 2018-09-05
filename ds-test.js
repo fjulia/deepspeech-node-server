@@ -32,6 +32,19 @@ const N_FEATURES = 26;
 // Size of the context window used for producing timesteps in the input vector
 const N_CONTEXT = 9;
 
+
+(function() {
+	var childProcess = require("child_process");
+	var oldSpawn = childProcess.spawn;
+	function mySpawn(){
+		console.log("Spawn called");
+		console.log(arguments);
+		var result = oldSpawn.apply(this,arguments);
+		return result;
+	}
+	childProcess.spawn = mySpawn;
+})();
+
 var VersionAction = function VersionAction(options) {
   options = options || {};
   options.nargs = 0;
@@ -64,6 +77,7 @@ if (result.sampleRate < 16000) {
   console.error('Warning: original sample rate (' + result.sampleRate + ') is lower than 16kHz. Up-sampling might produce erratic speech recognition.');
 }
 
+
 function bufferToStream(buffer) {
   var stream = new Duplex();
   stream.push(buffer);
@@ -75,7 +89,7 @@ var audioStream = new MemoryStream();
 bufferToStream(buffer).
   pipe(Sox({ output: { bits: 16, rate: 16000, channels: 1, type: 'raw' } })).
   pipe(audioStream);
-/*
+
 audioStream.on('finish', () => {
   audioBuffer = audioStream.toBuffer();
 
@@ -103,4 +117,4 @@ audioStream.on('finish', () => {
   console.log(model.stt(audioBuffer.slice(0, audioBuffer.length / 2), 16000));
   const inference_stop = process.hrtime(inference_start);
   console.error('Inference took %ds for %ds audio file.', totalTime(inference_stop), audioLength.toPrecision(4));
-});*/
+});

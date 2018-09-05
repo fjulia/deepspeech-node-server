@@ -1,3 +1,5 @@
+# Deepspeech models
+src/deepspeech/models/
 
 .DS_Store
 node_modules/
